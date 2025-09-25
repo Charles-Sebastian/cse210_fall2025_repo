@@ -35,7 +35,7 @@ class Program
 
         foreach (int number in numbers)
         {
-            sum = sum + number;
+            sum += number;
         }
 
         Console.WriteLine($"The sum is: {sum}");

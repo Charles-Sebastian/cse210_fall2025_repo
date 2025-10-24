@@ -93,10 +93,11 @@ class Program
             Scripture scripture = new Scripture(refScript[0], words);
             int iteration = 1;
             bool run = true;
+            string moreWords = "";
 
             do
             {
-                scripture.Display(iteration);
+                moreWords = scripture.Display(iteration);
                 Console.Write("Press enter to continue or type 'quit' to finish: ");
 
                 string userInput = Console.ReadLine();
@@ -109,6 +110,11 @@ class Program
                     Console.Clear();
                     scripture.Hide();
                     iteration += 1;
+
+                    if (moreWords == "done")
+                    {
+                        run = false;
+                    }
                 }
             } while (run == true);
         }

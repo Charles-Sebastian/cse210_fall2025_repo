@@ -101,9 +101,10 @@ public class Scripture
             _words[hideWord].HideWord();
         }
     }
-    public void Display(int iteration)
+    public string Display(int iteration)
     {
         Console.Write($"{_reference.CompileReference()} ");
+        int wordsHidden = 0;
 
         foreach (Word word in _words)
         {
@@ -131,11 +132,20 @@ public class Scripture
                         }
                     }
 
+                    wordsHidden += 1;
                     Console.Write(" ");
                 }
             }
         }
 
         Console.WriteLine();
+        if (wordsHidden == _words.Count)
+        {
+            return "done";
+        }
+        else
+        {
+            return "continue";
+        }
     }
 }

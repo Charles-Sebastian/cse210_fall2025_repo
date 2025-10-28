@@ -97,7 +97,7 @@ class Program
 
             do
             {
-                moreWords = scripture.Display(iteration);
+                moreWords = scripture.Display();
                 Console.Write("Press enter to continue or type 'quit' to finish: ");
 
                 string userInput = Console.ReadLine();

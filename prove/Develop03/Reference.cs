@@ -19,7 +19,7 @@ public class Reference
         _fVerse = fVerse;
     }
 
-    public string CompileReference()
+    public void DisplayReference()
     {
         string reference;
         reference = $"{_book} {_chapter}:{_fVerse}";
@@ -28,6 +28,6 @@ public class Reference
             reference = reference + $"-{_lVerse}";
         }
 
-        return reference;
+        Console.Write(reference);
     }
 }

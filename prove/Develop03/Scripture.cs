@@ -101,41 +101,16 @@ public class Scripture
             _words[hideWord].HideWord();
         }
     }
-    public string Display(int iteration)
+    public string Display()
     {
-        Console.Write($"{_reference.CompileReference()} ");
+        _reference.DisplayReference();
+        Console.Write(" ");
         int wordsHidden = 0;
 
         foreach (Word word in _words)
         {
-            if (iteration < 2)
-            {
-                Console.Write($"{word.GetWord()} ");
-            }
-            else
-            {
-                if (word.GetStatus() == false)
-                {
-                    Console.Write($"{word.GetWord()} ");
-                }
-                else
-                {
-                    foreach (char character in word.GetWord())
-                    {
-                        if (char.IsLetter(character) == true || char.IsDigit(character) == true)
-                        {
-                            Console.Write("_");
-                        }
-                        else
-                        {
-                            Console.Write(character);
-                        }
-                    }
-
-                    wordsHidden += 1;
-                    Console.Write(" ");
-                }
-            }
+            wordsHidden += word.DisplayWord();
+            Console.Write(" ");
         }
 
         Console.WriteLine();

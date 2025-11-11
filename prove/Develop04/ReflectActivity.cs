@@ -2,8 +2,10 @@ public class ReflectActivity : Activity
 {
     private List<string> _reflectionPrompts = new List<string>();
     private List<string> _reflectionQuestions = new List<string>();
+    private List<int> _usedPrompts = new List<int>();
+    private List<int> _usedQuestions = new List<int>();
 
-    public ReflectActivity(string activityName, List<string> animationSymbols, string startMessage, string congratsMessage, string endMessagePart1, string endMessagePart2, string activityDescription, List<string> reflectionPrompts, List<string> reflectionQuestions) : base(activityName, animationSymbols, startMessage, congratsMessage, endMessagePart1, endMessagePart2, activityDescription)
+    public ReflectActivity(string activityName, List<string> animationSymbols, string startMessage, string congratsMessage, string endMessagePart1, string endMessagePart2, string activityDescription, List<string> reflectionPrompts, List<string> reflectionQuestions, bool runTest = false) : base(activityName, animationSymbols, startMessage, congratsMessage, endMessagePart1, endMessagePart2, activityDescription, runTest)
     {
         foreach (string propmt in reflectionPrompts)
         {
@@ -17,6 +19,13 @@ public class ReflectActivity : Activity
 
     public void RunActivity()
     {
+        _usedQuestions.Clear();
+
+        if (_reflectionPrompts.Count == _usedPrompts.Count)
+        {
+            _usedPrompts.Clear();
+        }
+
         Console.Clear();
         DisplayMessage(1);
         Console.WriteLine();
@@ -29,7 +38,19 @@ public class ReflectActivity : Activity
         Console.WriteLine("Getting ready...");
         RunAnimation();
 
-        int prompt = RandomNumber(_reflectionPrompts.Count);
+        int prompt = 0;
+        bool usedPrompt = true;
+
+        while (usedPrompt == true)
+        {
+            prompt = RandomNumber(_reflectionPrompts.Count);
+
+            if (_usedPrompts.Contains(prompt) == false)
+            {
+                usedPrompt = false;
+            } 
+        }
+        _usedPrompts.Add(prompt);
 
         Console.WriteLine("Consider the following prompt:");
         Console.WriteLine();
@@ -45,11 +66,28 @@ public class ReflectActivity : Activity
 
         DateTime endTime = CreateClock();
         int question = 0;
+        bool usedQuestion;
 
         while (DateTime.Now < endTime)
         {
-            question = RandomNumber(_reflectionQuestions.Count);
-            Console.Write($"> {_reflectionQuestions[question]} ");
+            usedQuestion = true;
+            while (usedQuestion == true)
+            {
+                question = RandomNumber(_reflectionQuestions.Count);
+
+                if (_usedQuestions.Contains(question) == false)
+                {
+                    usedQuestion = false;
+                }
+                else if (_reflectionQuestions.Count == _usedQuestions.Count)
+                {
+                    _usedQuestions.Clear();
+                    usedQuestion = false;
+                }
+            }
+            _usedQuestions.Add(question);
+
+            Console.Write($">{question}. {_reflectionQuestions[question]} ");
             RunAnimation(endTime.ToString(), 15);
             Console.WriteLine();
         }

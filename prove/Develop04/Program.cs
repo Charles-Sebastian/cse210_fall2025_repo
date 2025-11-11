@@ -2,6 +2,8 @@ using System;
 
 class Program
 {
+    // To go above and beyond I made it so that each propmt will only be used once per session unless all propmts are used.
+    // For the reflection activity, each question will only be asked once each time you do the reflection activity until all questions have been used.
     static void Main(string[] args)
     {
         List<string> activityDescriptions =
@@ -58,6 +60,11 @@ class Program
         string userInput;
         int action = 0;
 
+        BreatheActivity breatheActivity = new BreatheActivity(activities[0], animationSymbols, messages[0], messages[1], messages[2], messages[3], activityDescriptions[0], 5);
+        ReflectActivity reflectActivity = new ReflectActivity(activities[0], animationSymbols, messages[0], messages[1], messages[2], messages[3], activityDescriptions[0], reflectionPrompts, reflectionQuestions);
+        ListActivity listActivity = new ListActivity(activities[0], animationSymbols, messages[0], messages[1], messages[2], messages[3], activityDescriptions[0], listPrompts);
+
+
         while (run == true)
         {
             do
@@ -74,7 +81,14 @@ class Program
 
                 try
                 {
-                    action = int.Parse(userInput);
+                    if (userInput == "test")
+                    {
+                        action = -1;
+                    }
+                    else
+                    {
+                       action = int.Parse(userInput); 
+                    }
                 }
                 catch (Exception)
                 {
@@ -83,7 +97,7 @@ class Program
                     validInput = false;
                 }
 
-                if (action > 0 && action <= 4)
+                if ((action > 0 && action <= 4) || (userInput == "test"))
                 {
                     validInput = true;
                 }
@@ -98,18 +112,19 @@ class Program
 
             if (action == 1)
             {
-                BreatheActivity breatheActivity = new BreatheActivity(activities[0], animationSymbols, messages[0], messages[1], messages[2], messages[3], activityDescriptions[0], 5);
                 breatheActivity.RunActivity();
             }
             else if (action == 2)
             {
-                ReflectActivity reflectActivity = new ReflectActivity(activities[0], animationSymbols, messages[0], messages[1], messages[2], messages[3], activityDescriptions[0], reflectionPrompts, reflectionQuestions);
                 reflectActivity.RunActivity();
             }
             else if (action == 3)
             {
-                ListActivity listActivity = new ListActivity(activities[0], animationSymbols, messages[0], messages[1], messages[2], messages[3], activityDescriptions[0], listPrompts);
                 listActivity.RunActivity();
+            }
+            else if (userInput == "test")
+            {
+                
             }
             else
             {

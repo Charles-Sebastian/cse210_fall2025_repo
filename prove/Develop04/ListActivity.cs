@@ -1,8 +1,9 @@
 public class ListActivity : Activity
 {
     private List<string> _listPrompts = new List<string>();
+    private List<int> _usedPrompts = new List<int>();
 
-    public ListActivity(string activityName, List<string> animationSymbols, string startMessage, string congratsMessage, string endMessagePart1, string endMessagePart2, string activityDescription, List<string> listPrompts) : base(activityName, animationSymbols, startMessage, congratsMessage, endMessagePart1, endMessagePart2, activityDescription)
+    public ListActivity(string activityName, List<string> animationSymbols, string startMessage, string congratsMessage, string endMessagePart1, string endMessagePart2, string activityDescription, List<string> listPrompts, bool runTest = false) : base(activityName, animationSymbols, startMessage, congratsMessage, endMessagePart1, endMessagePart2, activityDescription, runTest)
     {
         foreach (string prompt in listPrompts)
         {
@@ -12,6 +13,11 @@ public class ListActivity : Activity
 
     public void RunActivity()
     {
+        if (_listPrompts.Count == _usedPrompts.Count)
+        {
+            _usedPrompts.Clear();
+        }
+
         Console.Clear();
         DisplayMessage(1);
         Console.WriteLine();
@@ -24,7 +30,19 @@ public class ListActivity : Activity
         Console.WriteLine("Getting ready...");
         RunAnimation();
 
-        int prompt = RandomNumber(_listPrompts.Count);
+        int prompt = 0;
+        bool usedPrompt = true;
+
+        while (usedPrompt == true)
+        {
+            prompt = RandomNumber(_listPrompts.Count);
+
+            if (_usedPrompts.Contains(prompt) == false)
+            {
+                usedPrompt = false;
+            } 
+        }
+        _usedPrompts.Add(prompt);
 
         Console.WriteLine("List as many responses to the following prompt as you can:");
         Console.WriteLine($"--- {_listPrompts[prompt]} ---");

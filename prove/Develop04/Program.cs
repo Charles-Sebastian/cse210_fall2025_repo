@@ -61,12 +61,14 @@ class Program
         int action = 0;
 
         BreatheActivity breatheActivity = new BreatheActivity(activities[0], animationSymbols, messages[0], messages[1], messages[2], messages[3], activityDescriptions[0], 5);
-        ReflectActivity reflectActivity = new ReflectActivity(activities[0], animationSymbols, messages[0], messages[1], messages[2], messages[3], activityDescriptions[0], reflectionPrompts, reflectionQuestions);
-        ListActivity listActivity = new ListActivity(activities[0], animationSymbols, messages[0], messages[1], messages[2], messages[3], activityDescriptions[0], listPrompts);
+        ReflectActivity reflectActivity = new ReflectActivity(activities[1], animationSymbols, messages[0], messages[1], messages[2], messages[3], activityDescriptions[0], reflectionPrompts, reflectionQuestions);
+        ListActivity listActivity = new ListActivity(activities[2], animationSymbols, messages[0], messages[1], messages[2], messages[3], activityDescriptions[0], listPrompts);
 
 
         while (run == true)
         {
+            validInput = false;
+
             do
             {
                 Console.Clear();
@@ -81,14 +83,7 @@ class Program
 
                 try
                 {
-                    if (userInput == "test")
-                    {
-                        action = -1;
-                    }
-                    else
-                    {
-                       action = int.Parse(userInput); 
-                    }
+                    action = int.Parse(userInput); 
                 }
                 catch (Exception)
                 {
@@ -97,11 +92,11 @@ class Program
                     validInput = false;
                 }
 
-                if ((action > 0 && action <= 4) || (userInput == "test"))
+                if (action > 0 && action <= 4)
                 {
                     validInput = true;
                 }
-                else if (action > 0 || action < 0)
+                else if (action > 4 || action < 1)
                 {
                     Console.WriteLine("Invalid Input - Number entered must be 1, 2, 3, or 4.");
                     Console.WriteLine();
@@ -121,10 +116,6 @@ class Program
             else if (action == 3)
             {
                 listActivity.RunActivity();
-            }
-            else if (userInput == "test")
-            {
-                
             }
             else
             {

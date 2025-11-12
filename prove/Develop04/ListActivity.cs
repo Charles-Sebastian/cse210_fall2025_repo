@@ -3,7 +3,7 @@ public class ListActivity : Activity
     private List<string> _listPrompts = new List<string>();
     private List<int> _usedPrompts = new List<int>();
 
-    public ListActivity(string activityName, List<string> animationSymbols, string startMessage, string congratsMessage, string endMessagePart1, string endMessagePart2, string activityDescription, List<string> listPrompts, bool runTest = false) : base(activityName, animationSymbols, startMessage, congratsMessage, endMessagePart1, endMessagePart2, activityDescription, runTest)
+    public ListActivity(string activityName, List<string> animationSymbols, string startMessage, string congratsMessage, string endMessagePart1, string endMessagePart2, string activityDescription, List<string> listPrompts) : base(activityName, animationSymbols, startMessage, congratsMessage, endMessagePart1, endMessagePart2, activityDescription)
     {
         foreach (string prompt in listPrompts)
         {

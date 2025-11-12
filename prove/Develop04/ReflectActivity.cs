@@ -5,7 +5,7 @@ public class ReflectActivity : Activity
     private List<int> _usedPrompts = new List<int>();
     private List<int> _usedQuestions = new List<int>();
 
-    public ReflectActivity(string activityName, List<string> animationSymbols, string startMessage, string congratsMessage, string endMessagePart1, string endMessagePart2, string activityDescription, List<string> reflectionPrompts, List<string> reflectionQuestions, bool runTest = false) : base(activityName, animationSymbols, startMessage, congratsMessage, endMessagePart1, endMessagePart2, activityDescription, runTest)
+    public ReflectActivity(string activityName, List<string> animationSymbols, string startMessage, string congratsMessage, string endMessagePart1, string endMessagePart2, string activityDescription, List<string> reflectionPrompts, List<string> reflectionQuestions) : base(activityName, animationSymbols, startMessage, congratsMessage, endMessagePart1, endMessagePart2, activityDescription)
     {
         foreach (string propmt in reflectionPrompts)
         {
@@ -87,7 +87,7 @@ public class ReflectActivity : Activity
             }
             _usedQuestions.Add(question);
 
-            Console.Write($">{question}. {_reflectionQuestions[question]} ");
+            Console.Write($"> {_reflectionQuestions[question]} ");
             RunAnimation(endTime.ToString(), 15);
             Console.WriteLine();
         }

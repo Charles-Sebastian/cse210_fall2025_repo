@@ -8,7 +8,7 @@ public class Activity
     private string _startMessage;
     private string _activityDescription;
     private string _congratsMessage;
-    private List<string> _endMessage =new List<string>();
+    private List<string> _endMessage = new List<string>();
 
     public Activity(string activityName, List<string> animationSymbols, string startMessage, string congratsMessage, string endMessagePart1, string endMessagePart2, string activityDescription)
     {
@@ -46,7 +46,6 @@ public class Activity
             Console.WriteLine("Invalid Message Type");
         }
     }
-
     public int ObtainDuration()
     {
         Console.Write("How long, in seconds, would you like for your session? ");
@@ -75,7 +74,6 @@ public class Activity
 
         return duration;
     }
-
     public void RunAnimation(string killTime = null, int runTime = 0)
     {
         if (runTime == 0)
@@ -86,7 +84,6 @@ public class Activity
         Animation animation = new Animation(_animationSymbols);
         animation.LoadingAnimation(runTime, killTime);
     }
-
     public DateTime CreateClock()
     {
         DateTime startTime = DateTime.Now;

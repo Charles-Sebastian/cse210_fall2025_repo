@@ -13,12 +13,12 @@ public abstract class Encryption
     private const int NUM_INDEX = 2;
     private const int SYM_INDEX = 3;
 
-    public Encryption(int l)
+    public Encryption(int l, string pS)
     {
+        _providedString = pS;
         _level = l;
         Compile(GetCyphers(), GetKeys());
         GenerateAutoincriment();
-
     }
 
     public virtual void SetKeyId(List<Cypher> cyphers)
@@ -91,7 +91,7 @@ public abstract class Encryption
 
         while (legnth > _cypher.Count || legnth > _key.Count)
         {
-            Console.WriteLine($"Character {_cypher.Count}/{legnth} of Cypher set. Character {_key.Count}/{legnth} of Key set.");
+            // Console.WriteLine($"Character {_cypher.Count}/{legnth} of Cypher set. Character {_key.Count}/{legnth} of Key set.");
 
             if (DetectIdType(_keyId[index]) == "abcL" && abcLCount < abcLCypher.Count)
             {

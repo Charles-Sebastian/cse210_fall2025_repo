@@ -1,10 +1,10 @@
 public class Level1 : Encryption
 {
     private string _finishedString;
-    private List<char> _encryptedString;
+    private List<char> _encryptedString = new List<char>();
     private List<char> _string = new List<char>();
 
-    public Level1(int l) : base(l)
+    public Level1(string pS) : base(1, pS)
     {
         EncryptString();
         EmbedId();
@@ -26,16 +26,17 @@ public class Level1 : Encryption
 
         foreach (char character in stringToEncrypt)
         {
-            if (autoincriment + count > key.Count)
+            autoincriment_count = autoincriment + count;
+
+            if (key.IndexOf(character) + autoincriment_count >= key.Count)
             {
-                autoincriment_count = (autoincriment + count) % key.Count;
+                index = (key.IndexOf(character) + autoincriment_count) % key.Count;
             }
             else
             {
-                autoincriment_count = autoincriment + count;
+                index = key.IndexOf(character) + autoincriment_count;
             }
-
-            index = key.IndexOf(character) + autoincriment_count;
+            
             _string.Add(cypher[index]);
         }
     }
@@ -61,7 +62,7 @@ public class Level1 : Encryption
         {
             _encryptedString.Add(character);
 
-            if (count == position)
+            if (count == position && idIndex < 4)
             {
                 _encryptedString.Add(id[idIndex]);
                 idIndex += 1;

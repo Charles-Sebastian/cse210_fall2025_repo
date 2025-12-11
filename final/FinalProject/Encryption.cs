@@ -3,6 +3,7 @@ using System.Runtime.InteropServices.Marshalling;
 public abstract class Encryption
 {
     private int _level;
+    private int _autoincriment;
     private string _providedString;
     private List<char> _keyId = new List<char>();
     private List<char> _key = new List<char>();
@@ -16,6 +17,8 @@ public abstract class Encryption
     {
         _level = l;
         Compile(GetCyphers(), GetKeys());
+        GenerateAutoincriment();
+
     }
 
     public virtual void SetKeyId(List<Cypher> cyphers)
@@ -125,18 +128,31 @@ public abstract class Encryption
             }
         }
     }
-    // public virtual List<char> GetCypher()
-    // {
-    //     return _cypher;
-    // }
-    // public virtual List<char> GetKey()
-    // {
-    //     return _key;
-    // }
-    // public virtual List<char> GetKeyId()
-    // {
-    //     return _keyId;
-    // }
+    public List<char> GetCypher()
+    {
+        return _cypher;
+    }
+    public List<char> GetKey()
+    {
+        return _key;
+    }
+    public List<char> GetKeyId()
+    {
+        return _keyId;
+    }
+    public string GetString()
+    {
+        return _providedString;
+    }
+    private void GenerateAutoincriment()
+    {
+        Random random = new Random();
+        _autoincriment = random.Next(0, _key.Count);
+    }
+    public int GetAutoincriment()
+    {
+        return _autoincriment;
+    }
     public string DetectIdType(char id)
     {
         if (char.IsLetter(id))

@@ -7,8 +7,12 @@ class Program
 {
     static void Main(string[] args)
     {
-        Level1 test1 = new Level1(Console.ReadLine());
+        Console.Clear();
 
-        Console.WriteLine(test1.GetEncryptedString());
+        Console.Write("Press enter when ready to begin program: ");
+        // string operation = Console.ReadLine();
+        Console.WriteLine();
+
+        Actions action = new Actions("Test");
     }
 }

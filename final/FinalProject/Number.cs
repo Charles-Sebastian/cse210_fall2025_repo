@@ -2,12 +2,12 @@ public class Number : Cypher
 {
     private List<char> _cypher = new List<char>();
     private char _cypherId;
-    public Number(char id) : base(id)
+    public Number(char id, char cypherId = '\0') : base(id)
     {
-        GenerateCypher();
+        GenerateCypher(cypherId);
     }
 
-    private void GenerateCypher(char cypherId = '\0')
+    private void GenerateCypher(char cypherId)
     {
         int cypher = -1;
 
@@ -23,6 +23,7 @@ public class Number : Cypher
             Random random = new Random();
             int randomCypher = random.Next(0, 3);
             cypher = randomCypher;
+            // Console.WriteLine("Selecting Random Cypher");
         }
         else
         {

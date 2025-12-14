@@ -2,12 +2,12 @@ public class UpperAlpha : Cypher
 {
     private List<char> _cypher = new List<char>();
     private char _cypherId;
-    public UpperAlpha(char id) : base(id)
+    public UpperAlpha(char id, char cypherId = '\0') : base(id)
     {
-        GenerateCypher();
+        GenerateCypher(cypherId);
     }
 
-    private void GenerateCypher(char cypherId = '\0')
+    private void GenerateCypher(char cypherId)
     {
         int cypher = -1;
 

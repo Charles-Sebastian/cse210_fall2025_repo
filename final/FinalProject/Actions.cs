@@ -28,10 +28,15 @@ public class Actions
         int runtime = 1;
         int test = 1;
         int correctRun = 0;
-        int testReady = 2;
+        int testReady = 3;
         string output = "";
         Encryption eTest = null;
-        Decryption dTest = null;
+        Encryption eTest1 = null;
+        Decryption dTest1 = null;
+        Encryption eTest2 = null;
+        Decryption dTest2 = null;
+        Encryption eTest3 = null;
+        Decryption dTest3 = null;
         
         if (runtime == 1)
         {
@@ -44,21 +49,33 @@ public class Actions
             {
                 if (test == 1)
                 {
-                    eTest = new Level1(testString);
-                    dTest = new DLevel1(eTest.GetEncryptedString());
-                    output = dTest.GetDecryptedString();
+                    // Console.WriteLine("Level 1 Test started");
+                    eTest1 = new Level1(testString);
+                    eTest = eTest1;
+                    dTest1 = new DLevel1(eTest1.GetFinishedString());
+                    output = dTest1.GetDecryptedString();
                 }
                 else if (test == 2)
                 {
-                    eTest = new Level2(testString);
-                    dTest = new DLevel2(eTest.GetEncryptedString());
-                    output = dTest.GetDecryptedString();
+                    // Console.WriteLine("Level 2 Test started");
+                    eTest2 = new Level2(testString);
+                    eTest = eTest2;
+                    // Console.WriteLine("Level 2 Decryption started");
+                    dTest2 = new DLevel2(eTest2.GetFinishedString());
+                    output = dTest2.GetDecryptedString();
+                }
+                else
+                {
+                    // Console.WriteLine("Level 3 Test started");
+                    eTest3 = new Level3(testString);
+                    eTest = eTest3;
+                    dTest3 = new DLevel3(eTest3.GetFinishedString());
+                    output = dTest3.GetDecryptedString();
                 }
 
                 
                 if (runtime == 1)
                 {
-                    Console.WriteLine($"Level {test} Test - |{eTest.GetEncryptedString()}|");
                     Console.WriteLine($"Level {test} Test - |{output}|");
                 }
 

@@ -9,7 +9,6 @@ public class KeySym : Key
     {
         List<char> key = ['!', '#', '$', '%', '&', '(', ')', '*', '=', '+', ',', '-', '.', '/', ':', ';', '<', '>', '?', '@', '[', ']', '^', '_', '`', '{', '}', '~', ' '];
         SetKey(key);
-        // Console.WriteLine("SYM Key Generated");
     }
     public override string CallType()
     {

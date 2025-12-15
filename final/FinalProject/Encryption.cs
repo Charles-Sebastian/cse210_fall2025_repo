@@ -20,11 +20,58 @@ public abstract class Encryption
     {
         _providedString = pS;
         _level = l;
-        Compile(GetCyphers(), GetKeys());
+        Compile(GetCyphers(1), GetKeys(), 1);
         GenerateAutoincriment();
     }
 
-    public virtual void SetKeyId(List<Cypher> cyphers)
+public int GetAbcLIndex()
+    {
+        return ABC_L_INDEX;
+    }
+    public int GetAbcUIndex()
+    {
+        return ABC_U_INDEX;
+    }
+    public int GetNumIndex()
+    {
+        return NUM_INDEX;
+    }
+    public int GetSymIndex()
+    {
+        return SYM_INDEX;
+    }
+    public string GetString()
+    {
+        return _providedString;
+    }
+    public virtual List<Key> GetKeys()
+    {
+        KeyLower abcLKey = new KeyLower();
+        KeyUpper abcUKey = new KeyUpper();
+        KeyNum numKey = new KeyNum();
+        KeySym symKey = new KeySym();
+
+        List<Key> keys = [abcLKey, abcUKey, numKey, symKey];
+
+        return keys;
+    }
+    public virtual List<Cypher> GetCyphers(int keyAndCypherNum)
+    {
+        LowerAlpha abcL = new LowerAlpha('a');
+        UpperAlpha abcU = new UpperAlpha('A');
+        Number num = new Number('1');
+        Symbol sym = new Symbol('!');
+
+        List<Cypher> cyphers = [abcL, abcU, num, sym];
+        GenerateKeyId(cyphers, keyAndCypherNum);
+
+        return cyphers;
+    }
+    public List<char> GetCypher()
+    {
+        return _cypher;
+    }
+    public virtual void GenerateKeyId(List<Cypher> cyphers, int keyAndCypherNum)
     {
         Random random = new Random();
 
@@ -39,38 +86,45 @@ public abstract class Encryption
             {
                 _keyId.Add(cyphers[setKeyId].GetCypherId());
                 idIndex.Add(setKeyId);
-                // Console.WriteLine($"Obtained Key ID {idIndex.Count}");
             }
         }
-        // Console.WriteLine("Set Key ID");
     }
-    public virtual List<Key> GetKeys()
+    public List<char> GetKeyId()
     {
-        KeyLower abcLKey = new KeyLower();
-        KeyUpper abcUKey = new KeyUpper();
-        KeyNum numKey = new KeyNum();
-        KeySym symKey = new KeySym();
-
-        List<Key> keys = [abcLKey, abcUKey, numKey, symKey];
-
-        return keys;
+        return _keyId;
     }
-    public virtual List<Cypher> GetCyphers()
+    public void SetKeyId(List<char> kI)
     {
-        LowerAlpha abcL = new LowerAlpha('a');
-        UpperAlpha abcU = new UpperAlpha('A');
-        Number num = new Number('1');
-        Symbol sym = new Symbol('!');
-
-        List<Cypher> cyphers = [abcL, abcU, num, sym];
-        SetKeyId(cyphers);
-
-        return cyphers;
+        _keyId = kI;
     }
-    public virtual void Compile(List<Cypher> cyphers, List<Key> keys)
+    public List<char> GetKey()
     {
-        // Console.WriteLine("Compiling Key and Cypher.....");
-
+        return _key;
+    }
+    public string DetectIdType(char id)
+    {
+        if (char.IsLetter(id))
+        {
+            if (char.IsUpper(id))
+            {
+                return "abcU";
+            }
+            else
+            {
+                return "abcL";
+            }
+        }
+        else if (char.IsDigit(id))
+        {
+            return "num";
+        }
+        else
+        {
+            return "sym";
+        }
+    }
+    public virtual void Compile(List<Cypher> cyphers, List<Key> keys, int keyAndCypherNum)
+    {
         List<char> abcLCypher = cyphers[ABC_L_INDEX].GetCypher();
         List<char> abcUCypher = cyphers[ABC_U_INDEX].GetCypher();
         List<char> numCypher = cyphers[NUM_INDEX].GetCypher();
@@ -89,13 +143,8 @@ public abstract class Encryption
         int symCount = 0;
 
         int index = 0;
-
-        // Console.WriteLine("Variables Set. Continuing to compile....");
-
         while (legnth > _cypher.Count || legnth > _key.Count)
         {
-            // Console.WriteLine($"Character {_cypher.Count}/{legnth} of Cypher set. Character {_key.Count}/{legnth} of Key set.");
-
             if (DetectIdType(_keyId[index]) == "abcL" && abcLCount < abcLCypher.Count)
             {
                 _cypher.Add(abcLCypher[abcLCount]);
@@ -131,21 +180,13 @@ public abstract class Encryption
             }
         }
     }
-    public List<char> GetCypher()
+    public void SetKey(List<char> k)
     {
-        return _cypher;
+        _key = k;
     }
-    public List<char> GetKey()
+    public void SetCypher(List<char> c)
     {
-        return _key;
-    }
-    public List<char> GetKeyId()
-    {
-        return _keyId;
-    }
-    public string GetString()
-    {
-        return _providedString;
+        _cypher = c;
     }
     private void GenerateAutoincriment()
     {
@@ -156,35 +197,82 @@ public abstract class Encryption
     {
         return _autoincriment;
     }
-    public void SetEncryptedString(string eS)
+    protected virtual void EncryptString(string sTE = null)
     {
-        _finishedString = eS;
-    }
-    public virtual string GetEncryptedString()
-    {
-        return _finishedString;
-    }
-    public string DetectIdType(char id)
-    {
-        if (char.IsLetter(id))
+        List<char> id = _keyId;
+        List<char> key = _key;
+        List<char> cypher = _cypher;
+        string stringToEncrypt;
+        if (sTE == null)
         {
-            if (char.IsUpper(id))
-            {
-                return "abcU";
-            }
-            else
-            {
-                return "abcL";
-            }
-        }
-        else if (char.IsDigit(id))
-        {
-            return "num";
+            stringToEncrypt = _providedString;
         }
         else
         {
-            return "sym";
+            stringToEncrypt = sTE;
         }
+        
+
+        int autoincriment = _autoincriment;
+
+        int index = -1;
+        int count = 0;
+        int autoincriment_count = 0;
+
+        foreach (char character in stringToEncrypt)
+        {
+            autoincriment_count = autoincriment + count;
+            index = (key.IndexOf(character) + autoincriment_count) % key.Count;
+
+            _string.Add(cypher[index]);
+            count += 1;
+        }
+    }
+    public void SetString(List<char> s)
+    {
+        _string = s;
+    }
+    public List<char> GetStringNoEmbed()
+    {
+        return _string;
+    }
+    public virtual void EmbedId()
+    {
+        int idSpacing = _string.Count / 4;
+        int position = -1;
+        List<char> id = _keyId;
+
+        if (_string.Count % 4 == 0)
+        {
+            position = 1;
+        }
+        else
+        {
+            position = idSpacing;
+        }
+
+        int count = 1;
+        int idIndex = 0;
+
+        foreach (char character in _string)
+        {
+            _encryptedString.Add(character);
+            if (count == position && idIndex < 4)
+            {
+                _encryptedString.Add(id[idIndex]);
+                idIndex += 1;
+                position += idSpacing;
+            }
+            count += 1;
+        }
+    }
+    public void SetEncryptedString(List<char> eS)
+    {
+        _encryptedString = eS;
+    }
+    public List<char> GetEncryptedString()
+    {
+        return _encryptedString;
     }
     public virtual void EmbedIncriment()
     {
@@ -234,9 +322,6 @@ public abstract class Encryption
             encryptedIncriment.Add(num[firstDigit]);
         }
 
-        // Console.WriteLine($"Second Digit = {encryptedIncriment[0]}");
-        // Console.WriteLine($"Second Digit = {encryptedIncriment[1]}");
-
         int index = 0;
         foreach (char character in _encryptedString)
         {
@@ -255,69 +340,18 @@ public abstract class Encryption
             _finishedString += character;
         }
     }
-    public virtual void EmbedId()
+    public void SetFinishedString(string eS)
     {
-        int idSpacing = _string.Count / 4;
-        int position = -1;
-        List<char> id = _keyId;
-
-        if (_string.Count % 4 == 0)
-        {
-            position = 1;
-        }
-        else
-        {
-            position = idSpacing;
-        }
-
-        int count = 1;
-        int idIndex = 0;
-
-        foreach (char character in _string)
-        {
-            _encryptedString.Add(character);
-            if (count == position && idIndex < 4)
-            {
-                _encryptedString.Add(id[idIndex]);
-                idIndex += 1;
-                position += idSpacing;
-                // Console.WriteLine($"Index Added - {idIndex}");
-            }
-            // Console.WriteLine($"Character Added - {count}");
-            count += 1;
-        }
+        _finishedString = eS;
     }
-    protected virtual void EncryptString(string sTE = null)
+    public virtual string GetFinishedString()
     {
-        List<char> id = _keyId;
-        List<char> key = _key;
-        List<char> cypher = _cypher;
-        string stringToEncrypt;
-        if (sTE == null)
-        {
-            stringToEncrypt = _providedString;
-        }
-        else
-        {
-            stringToEncrypt = sTE;
-        }
-        
-
-        int autoincriment = _autoincriment;
-
-        int index = -1;
-        int count = 0;
-        int autoincriment_count = 0;
-
-        foreach (char character in stringToEncrypt)
-        {
-            autoincriment_count = autoincriment + count;
-            index = (key.IndexOf(character) + autoincriment_count) % key.Count;
-
-            _string.Add(cypher[index]);
-            count += 1;
-        }
+        return _finishedString;
     }
-
     protected abstract void RunEncryption();
+    public virtual List<char> GetCypher2()
+    {
+        List<char> noList = new List<char>();
+        return noList;
+    }
 }

@@ -11,4 +11,5 @@ public class Level1 : Encryption
         EmbedId();
         EmbedIncriment();
     }
+    
 }

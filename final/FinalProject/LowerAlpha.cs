@@ -31,7 +31,6 @@ public class LowerAlpha : Cypher
 
         _cypher = cyphers[cypher];
         _cypherId = cypherIds[cypher];
-        // Console.WriteLine("ABCL Cypher Generated");
     }
     public override char GetCypherId()
     {

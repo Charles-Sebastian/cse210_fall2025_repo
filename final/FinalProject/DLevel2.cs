@@ -18,7 +18,7 @@ public class DLevel2 : Decryption
 
         ExtractIncriment();
         ExtractId();
-        Compile(GetCyphers(), GetKeys());
+        Compile(GetCyphers(GetId()), GetKeys());
         Decrypt();
         Desalt();
         foreach (char c in _desaltedString)

@@ -15,7 +15,7 @@ public class Level2 : Encryption
     protected override void RunEncryption()
     {
         Level1 level1 = new Level1(GetString());
-        string stringToSalt = level1.GetEncryptedString();
+        string stringToSalt = level1.GetFinishedString();
         SaltString(stringToSalt);
         foreach (char c in _saltedString)
         {

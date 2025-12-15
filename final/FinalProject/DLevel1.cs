@@ -9,7 +9,7 @@ public class DLevel1 : Decryption
     {
         ExtractIncriment();
         ExtractId();
-        Compile(GetCyphers(), GetKeys());
+        Compile(GetCyphers(GetId()), GetKeys());
         Decrypt();
     }
 }

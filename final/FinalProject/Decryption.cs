@@ -2,7 +2,7 @@ public abstract class Decryption
 {
     private string _providedString;
     private string _decryptedString;
-    private int _autoIncriment;
+    private int _autoincriment;
     private List<char> _id = new List<char>();
     private List<char> _encryptedString = new List<char>();
     private List<char> _key = new List<char>();
@@ -17,6 +17,22 @@ public abstract class Decryption
         _providedString = pS;
     }
 
+    public int GetAbcLIndex()
+    {
+        return ABC_L_INDEX;
+    }
+    public int GetAbcUIndex()
+    {
+        return ABC_U_INDEX;
+    }
+    public int GetNumIndex()
+    {
+        return NUM_INDEX;
+    }
+    public int GetSymIndex()
+    {
+        return SYM_INDEX;
+    }
     public void ExtractIncriment()
     {
         List<char> abcL = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
@@ -76,11 +92,14 @@ public abstract class Decryption
         }
 
         autoincriment = firstDigit.ToString() + secondDigit.ToString();
-        _autoIncriment = int.Parse(autoincriment);
+        _autoincriment = int.Parse(autoincriment);
+    }
+    public List<char> GetEncryptedString()
+    {
+        return _encryptedString;
     }
     public virtual void ExtractId()
     {
-        // Console.WriteLine("Extracting ID...");
         int idSpacing = (_encryptedString.Count - 4) / 4;
         List<int> idPositions = new List<int>();
         int position = -1;
@@ -88,12 +107,10 @@ public abstract class Decryption
         if ((_encryptedString.Count - 4) % 4 == 0)
         {
             position = 1;
-            // Console.WriteLine("Divisible by 4");
         }
         else
         {
             position = idSpacing;
-            // Console.WriteLine("Not Divisible by 4");
         }
 
         int count = 0;
@@ -104,7 +121,6 @@ public abstract class Decryption
             {
                 _id.Add(character);
                 idPositions.Add(position);
-                // Console.WriteLine($"Extracted ID - {character}");
                 position += idSpacing + 1;
             }
             count += 1;
@@ -114,7 +130,10 @@ public abstract class Decryption
         {
             _encryptedString.RemoveAt(idPositions[i] - i);
         }
-        // Console.WriteLine("Id extracted");
+    }
+    public void SetId(List<char> i)
+    {
+        _id = i;
     }
     public virtual List<Key> GetKeys()
     {
@@ -127,14 +146,18 @@ public abstract class Decryption
 
         return keys;
     }
-    public virtual List<Cypher> GetCyphers()
+    public virtual List<Cypher> GetCyphers(List<char> i)
     {
         char abcLId = '\0';
         char abcUId = '\0';
         char numId = '\0';
         char symId = '\0';
 
-        foreach (char character in _id)
+        List<char> id = new List<char>();
+
+        id = i;
+
+        foreach (char character in id)
         {
             if (DetectCharacterType(character) == "abcL")
             {
@@ -162,10 +185,8 @@ public abstract class Decryption
 
         return cyphers;
     }
-    public virtual void Compile(List<Cypher> cyphers, List<Key> keys)
+    public virtual void Compile(List<Cypher> cyphers, List<Key> keys, int keyAndCypherNum = 1)
     {
-        // Console.WriteLine("Compiling Key and Cypher.....");
-
         List<char> abcLCypher = cyphers[ABC_L_INDEX].GetCypher();
         List<char> abcUCypher = cyphers[ABC_U_INDEX].GetCypher();
         List<char> numCypher = cyphers[NUM_INDEX].GetCypher();
@@ -184,13 +205,8 @@ public abstract class Decryption
         int symCount = 0;
 
         int index = 0;
-
-        // Console.WriteLine("Variables Set. Continuing to compile....");
-
         while (legnth > _cypher.Count || legnth > _key.Count)
         {
-            // Console.WriteLine($"Character {_cypher.Count}/{legnth} of Cypher set. Character {_key.Count}/{legnth} of Key set.");
-
             if (DetectCharacterType(_id[index]) == "abcL" && abcLCount < abcLCypher.Count)
             {
                 _cypher.Add(abcLCypher[abcLCount]);
@@ -226,6 +242,14 @@ public abstract class Decryption
             }
         }
     }
+    public void SetKey(List<char> k)
+    {
+        _key = k;
+    }
+    public void SetCypher(List<char> c)
+    {
+        _cypher = c;
+    }
     public string DetectCharacterType(char c)
     {
         if (char.IsLetter(c))
@@ -248,25 +272,13 @@ public abstract class Decryption
             return "sym";
         }
     }
-    public void SetData(int aI, List<char> id, List<char> eS, List<char> k, List<char> c)
-    {
-        _autoIncriment = aI;
-        _id = id;
-        _encryptedString = eS;
-        _key = k;
-        _cypher = c;
-    }
     public int GetAutoincriment()
     {
-        return _autoIncriment;
+        return _autoincriment;
     }
     public List<char> GetId()
     {
         return _id;
-    }
-    public List<char> GetEncryptedString()
-    {
-        return _encryptedString;
     }
     public List<char> GetKey()
     {
@@ -277,11 +289,11 @@ public abstract class Decryption
     }
     public virtual void Decrypt()
     {
-        int autoincriment = GetAutoincriment();
-        List<char> id = GetId();
-        List<char> encryptedString = GetEncryptedString();
-        List<char> key = GetKey();
-        List<char> cypher = GetCypher();
+        int autoincriment = _autoincriment;
+        List<char> id = _id;
+        List<char> encryptedString = _encryptedString;
+        List<char> key = _key;
+        List<char> cypher = _cypher;
 
         int index = -1;
         int count = 0;

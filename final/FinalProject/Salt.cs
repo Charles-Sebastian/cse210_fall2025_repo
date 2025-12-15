@@ -20,8 +20,6 @@ public class Salt
 
     public void Salting()
     {
-        // Console.WriteLine("Salting string....");
-
         int saltAmount = 0;
         int saltSeperation = 0;
         int saltPosition = 0;
@@ -59,7 +57,6 @@ public class Salt
             saltSeperation = random.Next(1, maxSeperation + 1);
             saltPosition += saltSeperation;
             saltPositions.Add(saltSeperation);
-            // Console.WriteLine($"Salt Position Generated - {saltPositions.Count}");
         }
 
         int index = 0;
@@ -76,8 +73,6 @@ public class Salt
         {
             if (index == nextSaltPosition)
             {
-                // _editedString.Add('|');
-
                 saltAmount = random.Next(0,6);
                 _editedString.Add(char.Parse(saltAmount.ToString()));
                 while (amountOfSalt < saltAmount)
@@ -109,19 +104,12 @@ public class Salt
                     _editedString.Add('0');
                     _editedString.Add('0');
                 }
-                // _editedString.Add('|');
-
-                // Console.WriteLine("Salt Added");
                 amountOfSalt = 0;
             }
 
             _editedString.Add(c);
-
-            // Console.WriteLine("Character Added");
             index += 1;
         }
-
-        // Console.WriteLine("Salting Complete");
     }
     public void Desalting()
     {
@@ -213,19 +201,10 @@ public class Salt
         digits += firstDigit.ToString();
         digits += secondDigit.ToString();
 
-        if (digits == "010" || n > 99)
-        {
-            Console.WriteLine("ISSUE");
-        }
-
         return digits;
     }
-    public int NumberGenerator(char d1, char d2, bool t = false)
+    public int NumberGenerator(char d1, char d2)
     {
-        if (t)
-        {
-            Console.WriteLine(d2.ToString());
-        }
         string number = "";
         number += d1.ToString();
         number += d2.ToString();

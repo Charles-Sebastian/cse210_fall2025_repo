@@ -31,7 +31,6 @@ public class UpperAlpha : Cypher
 
         _cypher = cyphers[cypher];
         _cypherId = cypherIds[cypher];
-        // Console.WriteLine("ABCU Cypher Generated");
     }
     public override char GetCypherId()
     {

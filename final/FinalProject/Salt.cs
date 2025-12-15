@@ -18,7 +18,7 @@ public class Salt
         }
     }
 
-    public void Salting()
+    private void Salting()
     {
         int saltAmount = 0;
         int saltSeperation = 0;
@@ -111,7 +111,7 @@ public class Salt
             index += 1;
         }
     }
-    public void Desalting()
+    private void Desalting()
     {
         bool desalted = false;
         List<int> removeIndexes = new List<int>();
@@ -182,7 +182,7 @@ public class Salt
 
         _editedString = saltedString;
     }
-    public string DigitsGenerator(int n)
+    private string DigitsGenerator(int n)
     {
         int firstDigit = 0;
         int secondDigit = 0;
@@ -203,7 +203,7 @@ public class Salt
 
         return digits;
     }
-    public int NumberGenerator(char d1, char d2)
+    private int NumberGenerator(char d1, char d2)
     {
         string number = "";
         number += d1.ToString();

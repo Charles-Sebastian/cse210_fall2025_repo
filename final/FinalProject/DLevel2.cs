@@ -12,7 +12,7 @@ public class DLevel2 : Decryption
 
         _desaltedString = desalt.GetEditedString();
     }
-    public override void RunDecryption()
+    protected override void RunDecryption()
     {
         string desaltedString = "";
 

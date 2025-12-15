@@ -16,7 +16,7 @@ public abstract class Encryption
     private const int NUM_INDEX = 2;
     private const int SYM_INDEX = 3;
 
-    public Encryption(int l, string pS)
+    protected Encryption(int l, string pS)
     {
         _providedString = pS;
         _level = l;
@@ -24,27 +24,27 @@ public abstract class Encryption
         GenerateAutoincriment();
     }
 
-public int GetAbcLIndex()
+    protected int GetAbcLIndex()
     {
         return ABC_L_INDEX;
     }
-    public int GetAbcUIndex()
+    protected int GetAbcUIndex()
     {
         return ABC_U_INDEX;
     }
-    public int GetNumIndex()
+    protected int GetNumIndex()
     {
         return NUM_INDEX;
     }
-    public int GetSymIndex()
+    protected int GetSymIndex()
     {
         return SYM_INDEX;
     }
-    public string GetString()
+    protected string GetString()
     {
         return _providedString;
     }
-    public virtual List<Key> GetKeys()
+    protected virtual List<Key> GetKeys()
     {
         KeyLower abcLKey = new KeyLower();
         KeyUpper abcUKey = new KeyUpper();
@@ -55,7 +55,7 @@ public int GetAbcLIndex()
 
         return keys;
     }
-    public virtual List<Cypher> GetCyphers(int keyAndCypherNum)
+    protected virtual List<Cypher> GetCyphers(int keyAndCypherNum)
     {
         LowerAlpha abcL = new LowerAlpha('a');
         UpperAlpha abcU = new UpperAlpha('A');
@@ -67,11 +67,11 @@ public int GetAbcLIndex()
 
         return cyphers;
     }
-    public List<char> GetCypher()
+    protected List<char> GetCypher()
     {
         return _cypher;
     }
-    public virtual void GenerateKeyId(List<Cypher> cyphers, int keyAndCypherNum)
+    protected virtual void GenerateKeyId(List<Cypher> cyphers, int keyAndCypherNum)
     {
         Random random = new Random();
 
@@ -89,19 +89,19 @@ public int GetAbcLIndex()
             }
         }
     }
-    public List<char> GetKeyId()
+    protected List<char> GetKeyId()
     {
         return _keyId;
     }
-    public void SetKeyId(List<char> kI)
+    protected void SetKeyId(List<char> kI)
     {
         _keyId = kI;
     }
-    public List<char> GetKey()
+    protected List<char> GetKey()
     {
         return _key;
     }
-    public string DetectIdType(char id)
+    protected string DetectIdType(char id)
     {
         if (char.IsLetter(id))
         {
@@ -123,7 +123,7 @@ public int GetAbcLIndex()
             return "sym";
         }
     }
-    public virtual void Compile(List<Cypher> cyphers, List<Key> keys, int keyAndCypherNum)
+    protected virtual void Compile(List<Cypher> cyphers, List<Key> keys, int keyAndCypherNum)
     {
         List<char> abcLCypher = cyphers[ABC_L_INDEX].GetCypher();
         List<char> abcUCypher = cyphers[ABC_U_INDEX].GetCypher();
@@ -180,11 +180,11 @@ public int GetAbcLIndex()
             }
         }
     }
-    public void SetKey(List<char> k)
+    protected void SetKey(List<char> k)
     {
         _key = k;
     }
-    public void SetCypher(List<char> c)
+    protected void SetCypher(List<char> c)
     {
         _cypher = c;
     }
@@ -193,7 +193,7 @@ public int GetAbcLIndex()
         Random random = new Random();
         _autoincriment = random.Next(0, 23);
     }
-    public int GetAutoincriment()
+    protected int GetAutoincriment()
     {
         return _autoincriment;
     }
@@ -228,15 +228,15 @@ public int GetAbcLIndex()
             count += 1;
         }
     }
-    public void SetString(List<char> s)
+    protected void SetString(List<char> s)
     {
         _string = s;
     }
-    public List<char> GetStringNoEmbed()
+    protected List<char> GetStringNoEmbed()
     {
         return _string;
     }
-    public virtual void EmbedId()
+    protected virtual void EmbedId()
     {
         int idSpacing = _string.Count / 4;
         int position = -1;
@@ -266,15 +266,15 @@ public int GetAbcLIndex()
             count += 1;
         }
     }
-    public void SetEncryptedString(List<char> eS)
+    protected void SetEncryptedString(List<char> eS)
     {
         _encryptedString = eS;
     }
-    public List<char> GetEncryptedString()
+    protected List<char> GetEncryptedString()
     {
         return _encryptedString;
     }
-    public virtual void EmbedIncriment()
+    protected virtual void EmbedIncriment()
     {
         int autoincriment = _autoincriment;
         int firstDigit;
@@ -340,7 +340,7 @@ public int GetAbcLIndex()
             _finishedString += character;
         }
     }
-    public void SetFinishedString(string eS)
+    protected void SetFinishedString(string eS)
     {
         _finishedString = eS;
     }
@@ -349,9 +349,4 @@ public int GetAbcLIndex()
         return _finishedString;
     }
     protected abstract void RunEncryption();
-    public virtual List<char> GetCypher2()
-    {
-        List<char> noList = new List<char>();
-        return noList;
-    }
 }

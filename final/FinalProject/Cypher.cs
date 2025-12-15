@@ -2,7 +2,7 @@ public abstract class Cypher
 {
     private char _typeId;
 
-    public Cypher(char id)
+    protected Cypher(char id)
     {
         _typeId = id;
     }

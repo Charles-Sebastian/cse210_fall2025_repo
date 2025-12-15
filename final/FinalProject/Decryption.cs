@@ -12,28 +12,28 @@ public abstract class Decryption
     private const int NUM_INDEX = 2;
     private const int SYM_INDEX = 3;
 
-    public Decryption(string pS)
+    protected Decryption(string pS)
     {
         _providedString = pS;
     }
 
-    public int GetAbcLIndex()
+    protected int GetAbcLIndex()
     {
         return ABC_L_INDEX;
     }
-    public int GetAbcUIndex()
+    protected int GetAbcUIndex()
     {
         return ABC_U_INDEX;
     }
-    public int GetNumIndex()
+    protected int GetNumIndex()
     {
         return NUM_INDEX;
     }
-    public int GetSymIndex()
+    protected int GetSymIndex()
     {
         return SYM_INDEX;
     }
-    public void ExtractIncriment()
+    protected void ExtractIncriment()
     {
         List<char> abcL = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
         List<char> abcU = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
@@ -94,11 +94,11 @@ public abstract class Decryption
         autoincriment = firstDigit.ToString() + secondDigit.ToString();
         _autoincriment = int.Parse(autoincriment);
     }
-    public List<char> GetEncryptedString()
+    protected List<char> GetEncryptedString()
     {
         return _encryptedString;
     }
-    public virtual void ExtractId()
+    protected virtual void ExtractId()
     {
         int idSpacing = (_encryptedString.Count - 4) / 4;
         List<int> idPositions = new List<int>();
@@ -131,11 +131,11 @@ public abstract class Decryption
             _encryptedString.RemoveAt(idPositions[i] - i);
         }
     }
-    public void SetId(List<char> i)
+    protected void SetId(List<char> i)
     {
         _id = i;
     }
-    public virtual List<Key> GetKeys()
+    protected virtual List<Key> GetKeys()
     {
         KeyLower abcLKey = new KeyLower();
         KeyUpper abcUKey = new KeyUpper();
@@ -146,7 +146,7 @@ public abstract class Decryption
 
         return keys;
     }
-    public virtual List<Cypher> GetCyphers(List<char> i)
+    protected virtual List<Cypher> GetCyphers(List<char> i)
     {
         char abcLId = '\0';
         char abcUId = '\0';
@@ -185,7 +185,7 @@ public abstract class Decryption
 
         return cyphers;
     }
-    public virtual void Compile(List<Cypher> cyphers, List<Key> keys, int keyAndCypherNum = 1)
+    protected virtual void Compile(List<Cypher> cyphers, List<Key> keys, int keyAndCypherNum = 1)
     {
         List<char> abcLCypher = cyphers[ABC_L_INDEX].GetCypher();
         List<char> abcUCypher = cyphers[ABC_U_INDEX].GetCypher();
@@ -242,15 +242,15 @@ public abstract class Decryption
             }
         }
     }
-    public void SetKey(List<char> k)
+    protected void SetKey(List<char> k)
     {
         _key = k;
     }
-    public void SetCypher(List<char> c)
+    protected void SetCypher(List<char> c)
     {
         _cypher = c;
     }
-    public string DetectCharacterType(char c)
+    protected string DetectCharacterType(char c)
     {
         if (char.IsLetter(c))
         {
@@ -272,22 +272,22 @@ public abstract class Decryption
             return "sym";
         }
     }
-    public int GetAutoincriment()
+    protected int GetAutoincriment()
     {
         return _autoincriment;
     }
-    public List<char> GetId()
+    protected List<char> GetId()
     {
         return _id;
     }
-    public List<char> GetKey()
+    protected List<char> GetKey()
     {
         return _key;
-    }public List<char> GetCypher()
+    }protected List<char> GetCypher()
     {
         return _cypher;
     }
-    public virtual void Decrypt()
+    protected virtual void Decrypt()
     {
         int autoincriment = _autoincriment;
         List<char> id = _id;
@@ -314,7 +314,7 @@ public abstract class Decryption
             count += 1;
         }
     }
-    public string GetString()
+    protected string GetString()
     {
         return _decryptedString;
     }
@@ -322,9 +322,9 @@ public abstract class Decryption
     {
         return _decryptedString;
     }
-    public void SetDecryptedString(string dS)
+    protected void SetDecryptedString(string dS)
     {
         _decryptedString = dS;
     }
-    public abstract void RunDecryption();
+    protected abstract void RunDecryption();
 }

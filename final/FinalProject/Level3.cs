@@ -10,7 +10,7 @@ public class Level3 : Encryption
         RunEncryption();
     }
 
-    public override void GenerateKeyId(List<Cypher> cyphers, int keyAndCypherNum)
+    protected override void GenerateKeyId(List<Cypher> cyphers, int keyAndCypherNum)
     {
         Random random = new Random();
 
@@ -38,7 +38,7 @@ public class Level3 : Encryption
             _keyId2 = keyId;
         }
     }
-    public override void Compile(List<Cypher> cyphers, List<Key> keys, int keyAndCypherNum)
+    protected override void Compile(List<Cypher> cyphers, List<Key> keys, int keyAndCypherNum)
     {
         List<char> abcLCypher = cyphers[GetAbcLIndex()].GetCypher();
         List<char> abcUCypher = cyphers[GetAbcUIndex()].GetCypher();
@@ -173,7 +173,7 @@ public class Level3 : Encryption
         }
         SetString(encryptedString);
     }
-    public override void EmbedId()
+    protected override void EmbedId()
     {
         List<char> encryptedString = GetStringNoEmbed();
         List<char> keyId1 = GetKeyId();
@@ -223,9 +223,5 @@ public class Level3 : Encryption
         EncryptString(level2.GetFinishedString());
         EmbedId();
         EmbedIncriment();
-    }
-    public override List<char> GetCypher2()
-    {
-        return _cypher2;
     }
 }

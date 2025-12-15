@@ -6,7 +6,7 @@ public class Level2 : Encryption
     {
         RunEncryption();
     }
-    public void SaltString(string sTS)
+    private void SaltString(string sTS)
     {
         Salt salt = new Salt(sTS, GetCypher(), 0);
 

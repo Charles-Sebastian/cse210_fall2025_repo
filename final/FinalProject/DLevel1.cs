@@ -5,7 +5,7 @@ public class DLevel1 : Decryption
         RunDecryption();
     }
 
-    public override void RunDecryption()
+    protected override void RunDecryption()
     {
         ExtractIncriment();
         ExtractId();

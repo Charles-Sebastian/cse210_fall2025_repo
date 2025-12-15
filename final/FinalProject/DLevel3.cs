@@ -9,7 +9,7 @@ public class DLevel3 : Decryption
         RunDecryption();
     }
 
-    public override void ExtractId()
+    protected override void ExtractId()
     {
         List<char> encryptedString = GetEncryptedString();
         int idCount = 8;
@@ -53,7 +53,7 @@ public class DLevel3 : Decryption
             encryptedString.RemoveAt(idPositions[i] - i);
         }
     }
-    public override void Compile(List<Cypher> cyphers, List<Key> keys, int keyAndCypherNum)
+    protected override void Compile(List<Cypher> cyphers, List<Key> keys, int keyAndCypherNum)
     {
         List<char> abcLCypher = cyphers[GetAbcLIndex()].GetCypher();
         List<char> abcUCypher = cyphers[GetAbcUIndex()].GetCypher();
@@ -145,7 +145,7 @@ public class DLevel3 : Decryption
             return false;
         }
     }
-    public override void Decrypt()
+    protected override void Decrypt()
     {
         int autoincriment = GetAutoincriment();
         List<char> encryptedString = GetEncryptedString();
@@ -191,7 +191,7 @@ public class DLevel3 : Decryption
         
         SetDecryptedString(decryptedString);
     }
-    public override void RunDecryption()
+    protected override void RunDecryption()
     {
         ExtractIncriment();
         ExtractId();

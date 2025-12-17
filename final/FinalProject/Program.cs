@@ -10,9 +10,10 @@ class Program
         Console.Clear();
 
         Console.Write("Press enter when ready to begin program: ");
-        // string operation = Console.ReadLine();
+        string run = Console.ReadLine();
         Console.WriteLine();
+        Console.Clear();
 
-        Actions action = new Actions("Test");
+        Menu action = new Menu();
     }
 }

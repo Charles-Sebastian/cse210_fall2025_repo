@@ -25,6 +25,7 @@ public class DLevel2 : Decryption
         {
             desaltedString += c.ToString();
         }
+        // Console.WriteLine("Run Decrypt 1");
         DLevel1 dLevel1 = new DLevel1(desaltedString);
         SetDecryptedString(dLevel1.GetDecryptedString());
     }
